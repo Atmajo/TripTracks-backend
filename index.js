@@ -16,6 +16,7 @@ app.use(express.urlencoded());
 app.use(cors());
 
 app.post("/login", (request, response) => {
+  console.log(request.body);
   User.findOne({ email: request.body.email })
     .then((user) => {
       bcrypt
@@ -28,7 +29,6 @@ app.post("/login", (request, response) => {
               error,
             });
           }
-        
 
           //   create JWT token
           const token = jwt.sign(
@@ -49,7 +49,7 @@ app.post("/login", (request, response) => {
         })
         // catch error if password does not match
         .catch((error) => {
-          console.log(error)
+          console.log(error);
           response.status(400).send({
             message: "Passwords does not match",
             error,
@@ -69,7 +69,7 @@ app.post("/register", async (request, response) => {
   try {
     const { username, email, ...data } = request.body;
     const existingUser = await User.findOne({ email });
-    
+
     if (existingUser) {
       return response.status(404).json({ message: "USER_ALREADY_EXISTS" });
     }
@@ -89,6 +89,6 @@ app.post("/register", async (request, response) => {
   }
 });
 
-app.listen(3000, () => {
+app.listen(3020, () => {
   console.log("Successfully connected to port");
 });
