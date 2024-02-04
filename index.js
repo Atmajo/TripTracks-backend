@@ -57,6 +57,7 @@ app.post("/login", (request, response) => {
         });
     })
     .catch((e) => {
+      console.log(e);
       response.status(404).send({
         message: "Email not found",
         e,
